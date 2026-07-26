@@ -1,5 +1,5 @@
 // ============================================
-// PROJETO 8 - ETAPA FINAL
+// PROJETO 9 - VALIDAÇÃO DE FORMULÁRIOS
 // "Around The U.S."
 // ============================================
 
@@ -107,7 +107,7 @@ function handleOverlayClose(evt) {
 // --------------------------------------------
 
 function getCardElement(data) {
-  const { name = "Lugar sem nome", link = "./images/placeholder.jpg" } = data;
+  const { name, link } = data;
 
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__title");
@@ -170,6 +170,7 @@ function handleProfileFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   profileNameInput.value = profileTitle.textContent;
   profileJobInput.value = profileDescription.textContent;
+  clearValidation(profileEditForm, validationConfig);
   openModal(profileEditPopup);
 });
 
@@ -193,6 +194,7 @@ function handleCardFormSubmit(evt) {
 
 newCardButton.addEventListener("click", () => {
   newCardForm.reset();
+  clearValidation(newCardForm, validationConfig);
   openModal(newCardPopup);
 });
 

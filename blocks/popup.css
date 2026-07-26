@@ -31,6 +31,15 @@
   cursor: pointer;
 }
 
+.popup__button:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.popup__button:disabled:hover {
+  background: #000;
+}
+
 .popup__close {
   width: 35px;
   height: 35px;
@@ -78,6 +87,23 @@
 
 .popup__input:last-of-type {
   margin-bottom: 0;
+}
+
+.popup__input_type_error {
+  border-bottom-color: #ff0000;
+}
+
+.popup__input-error {
+  display: none;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  margin: 4px 0 0;
+}
+
+.popup__input-error_active {
+  display: block;
 }
 
 .popup__title {
