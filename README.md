@@ -1,4 +1,5 @@
 # Tripleten web_project_around_pt
+
 # Around The U.S.
 
 ## Descrição
@@ -14,13 +15,31 @@ Aplicação web interativa que apresenta uma galeria de lugares ao redor do mund
 - Botão de excluir em cada cartão, que o remove do DOM
 - Ampliação da imagem do cartão em um pop-up ao clicar nela
 - Fechamento dos pop-ups através do botão de fechar, da tecla `Esc` ou do clique fora da área do pop-up
+- Validação em tempo real dos formulários, com o botão de envio desabilitado enquanto houver campos inválidos
 
 ## Tecnologias e técnicas utilizadas
 
 - HTML5 semântico
 - CSS3 (metodologia BEM, Flexbox)
-- JavaScript (manipulação do DOM, `<template>`, eventos, funções reutilizáveis para abrir/fechar modais)
+- JavaScript (manipulação do DOM, `<template>`, eventos, `ValidityState`)
+- Programação Orientada a Objetos (classes ES6 `Card` e `FormValidator`, encapsulamento com propriedades e métodos privados)
+- Módulos JS (`import`/`export`), com o código dividido em `Card.js`, `FormValidator.js`, `utils.js` e `index.js`
 - Git e GitHub para controle de versão
+
+## Estrutura do projeto
+
+```
+├── index.html
+├── pages/
+│   └── index.css
+├── blocks/
+├── images/
+└── scripts/
+    ├── Card.js
+    ├── FormValidator.js
+    ├── utils.js
+    └── index.js
+```
 
 ## GitHub Pages
 
