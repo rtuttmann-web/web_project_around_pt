@@ -1,7 +1,17 @@
-// ============================================
-// PROJETO 9 - VALIDAÇÃO DE FORMULÁRIOS
-// "Around The U.S."
-// ============================================
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+import { openModal, closeModal, handleOverlayClose } from "./utils.js";
+
+// --------------------------------------------
+// CONFIGURAÇÃO DA VALIDAÇÃO
+// --------------------------------------------
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  errorClass: "popup__input-error_active",
+  inputErrorClass: "popup__input_type_error",
+};
 
 // --------------------------------------------
 // DADOS INICIAIS
@@ -39,9 +49,7 @@ const initialCards = [
 
 // Cartões
 const cardsList = document.querySelector(".cards__list");
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".card");
+const cardTemplateSelector = "#card-template";
 
 // Pop-up "Editar perfil"
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -74,84 +82,33 @@ const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 const closeButtons = document.querySelectorAll(".popup__close");
 
 // --------------------------------------------
-// FUNÇÕES DE MODAL (genéricas — usadas por todos os pop-ups)
+// INSTÂNCIAS DE FORMVALIDATOR
 // --------------------------------------------
 
-function openModal(popup) {
-  popup.classList.add("popup_is-opened");
-  document.addEventListener("keydown", handleEscClose);
-}
+const profileEditValidator = new FormValidator(
+  validationConfig,
+  profileEditForm
+);
+profileEditValidator.setEventListeners();
 
-function closeModal(popup) {
-  popup.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", handleEscClose);
-}
-
-function handleEscClose(evt) {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_is-opened");
-    if (openedPopup) {
-      closeModal(openedPopup);
-    }
-  }
-}
-
-function handleOverlayClose(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModal(evt.target);
-  }
-}
+const newCardValidator = new FormValidator(validationConfig, newCardForm);
+newCardValidator.setEventListeners();
 
 // --------------------------------------------
 // CARTÕES
 // --------------------------------------------
-
-function getCardElement(data) {
-  const { name, link } = data;
-
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.alt = name;
-
-  likeButton.addEventListener("click", () => {
-    handleLikeClick(likeButton);
-  });
-
-  deleteButton.addEventListener("click", () => {
-    handleDeleteClick(cardElement);
-  });
-
-  cardImage.addEventListener("click", () => {
-    handleCardImageClick(name, link);
-  });
-
-  return cardElement;
-}
-
-function renderCard(name, link, container) {
-  const cardElement = getCardElement({ name, link });
-  container.prepend(cardElement);
-}
-
-function handleLikeClick(likeButton) {
-  likeButton.classList.toggle("card__like-button_is-active");
-}
-
-function handleDeleteClick(cardElement) {
-  cardElement.remove();
-}
 
 function handleCardImageClick(name, link) {
   imagePopupImage.src = link;
   imagePopupImage.alt = name;
   imagePopupCaption.textContent = name;
   openModal(imagePopup);
+}
+
+function renderCard(data, container) {
+  const card = new Card(data, cardTemplateSelector, handleCardImageClick);
+  const cardElement = card.generateCard();
+  container.prepend(cardElement);
 }
 
 // --------------------------------------------
@@ -170,7 +127,7 @@ function handleProfileFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   profileNameInput.value = profileTitle.textContent;
   profileJobInput.value = profileDescription.textContent;
-  clearValidation(profileEditForm, validationConfig);
+  profileEditValidator.resetValidation();
   openModal(profileEditPopup);
 });
 
@@ -186,7 +143,7 @@ function handleCardFormSubmit(evt) {
   const name = cardNameInput.value;
   const link = cardLinkInput.value;
 
-  renderCard(name, link, cardsList);
+  renderCard({ name, link }, cardsList);
 
   closeModal(newCardPopup);
   newCardForm.reset();
@@ -194,7 +151,7 @@ function handleCardFormSubmit(evt) {
 
 newCardButton.addEventListener("click", () => {
   newCardForm.reset();
-  clearValidation(newCardForm, validationConfig);
+  newCardValidator.resetValidation();
   openModal(newCardPopup);
 });
 
@@ -220,5 +177,5 @@ document.querySelectorAll(".popup").forEach((popup) => {
 // --------------------------------------------
 
 initialCards.forEach((item) => {
-  renderCard(item.name, item.link, cardsList);
+  renderCard(item, cardsList);
 });
