@@ -1,5 +1,3 @@
-# Tripleten web_project_around_pt
-
 # Around The U.S.
 
 ## Descrição
@@ -22,23 +20,30 @@ Aplicação web interativa que apresenta uma galeria de lugares ao redor do mund
 - HTML5 semântico
 - CSS3 (metodologia BEM, Flexbox)
 - JavaScript (manipulação do DOM, `<template>`, eventos, `ValidityState`)
-- Programação Orientada a Objetos (classes ES6 `Card` e `FormValidator`, encapsulamento com propriedades e métodos privados)
-- Módulos JS (`import`/`export`), com o código dividido em `Card.js`, `FormValidator.js`, `utils.js` e `index.js`
+- Programação Orientada a Objetos (classes ES6: `Card`, `FormValidator`, `Section`, `Popup`, `PopupWithImage`, `PopupWithForms`, `UserInfo`; herança e encapsulamento com propriedades e métodos privados)
+- Módulos JS (`import`/`export`), com o código dividido em arquivos separados por classe
 - Git e GitHub para controle de versão
 
 ## Estrutura do projeto
 
 ```
 ├── index.html
-├── pages/
-│   └── index.css
+├── page/
+│   ├── index.css
+│   └── index.js
+├── components/
+│   ├── Card.js
+│   ├── FormValidator.js
+│   ├── Section.js
+│   ├── Popup.js
+│   ├── PopupWithImage.js
+│   ├── PopupWithForms.js
+│   └── UserInfo.js
+├── utils/
+│   └── constants.js
 ├── blocks/
 ├── images/
-└── scripts/
-    ├── Card.js
-    ├── FormValidator.js
-    ├── utils.js
-    └── index.js
+└── vendor/
 ```
 
 ## GitHub Pages
